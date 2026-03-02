@@ -1,0 +1,55 @@
+# =========================
+# Dependencies
+# =========================
+node_modules/
+frontend/node_modules/
+backend/node_modules/
+
+# =========================
+# Build output
+# =========================
+dist/
+build/
+frontend/dist/
+backend/dist/
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.local
+frontend/.env*
+backend/.env*
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Cache / temp
+# =========================
+.cache/
+.tmp/
+.temp/
+
+# =========================
+# Framework specific
+# =========================
+.vite/
+.next/
+.nuxt/
+.svelte-kit/
+
+# =========================
+# IDE / OS
+# =========================
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# =========================
+# Testing
+# =========================
+coverage/
