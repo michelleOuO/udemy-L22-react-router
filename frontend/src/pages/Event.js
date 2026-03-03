@@ -10,10 +10,11 @@ function EventsPage() {
 export default EventsPage;
 
 export async function eventsLoader() {
-  const response = await fetch("http://localhost:8080/events");
+  const response = await fetch("http://localhost:8080/eventsss");
 
   if (!response.ok) {
-    // ...
+    // eslint-disable-next-line no-throw-literal
+    throw { message: "Something went wrong..."}
   } else {
     const resData = await response.json();
     return resData.events;
