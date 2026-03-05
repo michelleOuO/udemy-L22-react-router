@@ -10,9 +10,6 @@ function EventDetailPage() {
 export default EventDetailPage;
 
 export async function eventDetailLoader({ request, params }) {
-  console.log("request", request);
-  console.log("params", params);
-
   const id = params.id;
   const response = await fetch(`http://localhost:8080/events/${id}`);
 
