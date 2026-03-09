@@ -3,6 +3,7 @@ import {
   useActionData,
   useNavigate,
   useNavigation,
+  redirect
 } from "react-router-dom";
 import classes from "./EventForm.module.css";
 
@@ -32,7 +33,7 @@ function EventForm({ method, event }) {
           id="title"
           type="text"
           name="title"
-          // required
+          required
           defaultValue={event ? event.title : ""}
         />
       </p>
@@ -42,7 +43,7 @@ function EventForm({ method, event }) {
           id="image"
           type="url"
           name="image"
-          // required
+          required
           defaultValue={event ? event.image : ""}
         />
       </p>
@@ -52,7 +53,7 @@ function EventForm({ method, event }) {
           id="date"
           type="date"
           name="date"
-          // required
+          required
           defaultValue={event ? event.date : ""}
         />
       </p>
@@ -62,7 +63,7 @@ function EventForm({ method, event }) {
           id="description"
           name="description"
           rows="5"
-          // required
+          required
           defaultValue={event ? event.description : ""}
         />
       </p>
@@ -79,3 +80,42 @@ function EventForm({ method, event }) {
 }
 
 export default EventForm;
+
+export async function manipulateEventAction({ request, params }) {
+  const method = request.method;
+  const data = await request.formData();
+
+  const eventData = {
+    title: data.get("title"),
+    image: data.get("image"),
+    date: data.get("date"),
+    description: data.get("description"),
+  };
+
+  let url = "http://localhost:8080/events";
+
+  if (method === "PATCH") {
+    const id = params.id;
+    url = `http://localhost:8080/events/${id}`;
+  }
+
+  const response = await fetch(url, {
+    method,
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(eventData),
+  });
+
+  if (response.status === 422) {
+    return response;
+  }
+
+  if (!response.ok) {
+    return Response(JSON.stringify({ message: "Could not create event." }), {
+      status: 500,
+    });
+  }
+
+  return redirect("/events");
+}
