@@ -25,6 +25,10 @@ export async function newEventAction({ request, params }) {
     body: JSON.stringify(eventData),
   });
 
+  if (response.status === 422) {
+    return response;
+  }
+
   if (!response.ok) {
     return Response(JSON.stringify({ message: "Could not create event." }), {
       status: 500,
